@@ -18,15 +18,48 @@ struct location
 int main(int argc, char * argv[])
 {
     struct location size, start, exit;   
+    char ** maze;
+    int i, j;
+    FILE * filePtr;
+
+    /*If executable doesn't come with parameters, do random size*/
     if(argc < 3)
     {
-        size.col = rand()%90 + 10;
-        size.row = rand()%90 + 10;
+        size.col = rand()%20 + 10;
+        size.row = rand()%20 + 10;
     }
     else
     {
         size.col = strtol(argv[1], &argv[1], 10);
         size.row = strtol(argv[2], &argv[2], 10);
     }
+    start.col = start.row = exit.col = exit.row = 0;
+
+    /*Allocating the maze based on size*/
+    maze = (char **) malloc(sizeof(char *) * size.row);
+    for(i = 0; i < size.row; ++i)
+        maze[i] = (char *) malloc(sizeof(char) * (size.col + 1));
+
+    for(i = 0; i < size.row; ++i)
+    {
+        for(j = 0; j < size.col; ++j)
+            maze[i][j] = 'X';
+        maze[i][j] = '\n';
+    }
+        
+    filePtr = fopen("rand.txt", "w");
+    
+    /*Printing everything to text file rand.txt*/
+    fprintf(filePtr, "%i, %i\n%i, %i\n%i, %i\n", size.col, size.row, start.col, start.row, exit.col, exit.row);
+    for(i = 0; i < size.row; ++i)
+        fputs(maze[i], filePtr);
+
+    fclose(filePtr);
+
+    /*Deallocating the maze*/
+    for(i = 0; i < size.row; ++i)
+        free(maze[i]);
+    free(maze);
+
     return 0;
 }
