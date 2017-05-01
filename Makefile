@@ -1,7 +1,7 @@
 CFLAGS = -g -Wall -ansi -pedantic -O0
 
-randMaze: main.c
-	gcc $(CFLAGS) -o randMaze main.c # maze.h maze.c
+randMaze: main.c maze.c maze.h
+	gcc $(CFLAGS) -o recBackmain.c maze.c
 
 clean:
-	rm -f *.o rhr
+	rm -f *.o recBack

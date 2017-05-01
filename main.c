@@ -6,12 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-struct location
-{
-    int col;
-    int row;
-};
+#include "maze.h"
 
 
 
@@ -25,8 +20,8 @@ int main(int argc, char * argv[])
     /*If executable doesn't come with parameters, do random size*/
     if(argc < 3)
     {
-        size.col = rand()%20 + 10;
-        size.row = rand()%20 + 10;
+        size.col = rand()%40 + 30;
+        size.row = rand()%40 + 30;
     }
     else
     {
@@ -40,6 +35,7 @@ int main(int argc, char * argv[])
     for(i = 0; i < size.row; ++i)
         maze[i] = (char *) malloc(sizeof(char) * (size.col + 1));
 
+    /*Setting everything in the maze to 'X'*/
     for(i = 0; i < size.row; ++i)
     {
         for(j = 0; j < size.col; ++j)
@@ -47,6 +43,7 @@ int main(int argc, char * argv[])
         maze[i][j] = '\n';
     }
         
+
     filePtr = fopen("rand.txt", "w");
     
     /*Printing everything to text file rand.txt*/
