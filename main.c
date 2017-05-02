@@ -1,11 +1,10 @@
-/* Donovan Ellison
+/*
+ * Donovan Ellison
  * 4-22-2017
  * main.c
 */
 
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include "maze.h"
 
 
@@ -17,18 +16,18 @@ int main(int argc, char * argv[])
     int i, j;
     FILE * filePtr;
 
+    srand(time(NULL));
     /*If executable doesn't come with parameters, do random size*/
     if(argc < 3)
     {
-        size.col = rand()%40 + 30;
-        size.row = rand()%40 + 30;
+        size.col = rand()%40 + 20;
+        size.row = rand()%40 + 20;
     }
     else
     {
         size.col = strtol(argv[1], &argv[1], 10);
         size.row = strtol(argv[2], &argv[2], 10);
     }
-    start.col = start.row = exit.col = exit.row = 0;
 
     /*Allocating the maze based on size*/
     maze = (char **) malloc(sizeof(char *) * size.row);
@@ -42,6 +41,13 @@ int main(int argc, char * argv[])
             maze[i][j] = 'X';
         maze[i][j] = '\n';
     }
+
+    start.row = 0;
+    start. col = 1;
+    exit.row = size.row;
+    exit.col = size.col - 1;
+
+    carve(&maze, &size, start.row + 1, start.col, 2);
         
 
     filePtr = fopen("rand.txt", "w");
