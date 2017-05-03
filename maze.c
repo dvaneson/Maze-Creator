@@ -13,8 +13,13 @@ void (*go[4])(char ***, struct location *, int, int) = {goNorth, goEast, goSouth
 
 int carve(char *** maze, struct location * size, int row, int col, int direction)
 {
-    int randDirection, nextDirection;
+    int randDirection, nextDirection, i;
     (*maze)[row][col] = '0';   
+    for(i = 0; i < size->row; ++i)
+    {
+        printf("%s", (*maze)[i]);
+    }
+    printf("\n");
     randDirection = rand() % 3 + 3;
     nextDirection = rand() % 2 + 1;
     direction = (direction + randDirection) % 4;
@@ -36,7 +41,10 @@ int carve(char *** maze, struct location * size, int row, int col, int direction
 /*Or if would run into a wall, don't go*/
 void goNorth(char *** maze, struct location * size, int row, int col)
 {
-    if(col - 1 == 0 || col - 2 == 0 || (*maze)[row - 1][col] == '0' || (*maze)[row - 2][col] == '0')
+    if(row - 1 == 0 || row - 2 == 0)
+        return;
+
+    else if((*maze)[row - 1][col] == '0' || (*maze)[row - 2][col] == '0')
         return;
     else
         carve(maze, size, --row, col, 0);
@@ -46,28 +54,34 @@ void goNorth(char *** maze, struct location * size, int row, int col)
 
 void goEast(char *** maze, struct location * size, int row, int col)
 {
-    if(col - 1 == 0 || col - 2 == 0 || (*maze)[row - 1][col] == '0' || (*maze)[row - 2][col] == '0')
+    if(col + 1 == size->col || col + 2 == size->col)
+        return;
+    else if((*maze)[row][col + 1] == '0' || (*maze)[row][col + 2] == '0')
         return;
     else
-        carve(maze, size, --row, col, 0);
+        carve(maze, size, row, ++col, 1);
 }
 
 
 
 void goSouth(char *** maze, struct location * size, int row, int col)
 {
-    if(col - 1 == 0 || col - 2 == 0 || (*maze)[row - 1][col] == '0' || (*maze)[row - 2][col] == '0')
+    if(row + 1 == size->row || row + 2 == size->row)
+        return;
+    else if((*maze)[row + 1][col] == '0' || (*maze)[row + 2][col] == '0')
         return;
     else
-        carve(maze, size, --row, col, 0);
+        carve(maze, size, ++row, col, 2);
 }
 
 
 
 void goWest(char *** maze, struct location * size, int row, int col)
 {
-    if(col - 1 == 0 || col - 2 == 0 || (*maze)[row - 1][col] == '0' || (*maze)[row - 2][col] == '0')
+    if(col - 1 == 0 || col - 2 == 0)
+        return;
+    else if((*maze)[row][col - 1] == '0' || (*maze)[row][col - 2] == '0')
         return;
     else
-        carve(maze, size, --row, col, 0);
+        carve(maze, size, row, --col, 3);
 }

@@ -4,7 +4,6 @@
  * main.c
 */
 
-#include <stdio.h>
 #include "maze.h"
 
 
@@ -20,8 +19,8 @@ int main(int argc, char * argv[])
     /*If executable doesn't come with parameters, do random size*/
     if(argc < 3)
     {
-        size.col = rand()%40 + 20;
-        size.row = rand()%40 + 20;
+        size.col = rand()%10 + 5;
+        size.row = rand()%10 + 5;
     }
     else
     {
@@ -38,14 +37,16 @@ int main(int argc, char * argv[])
     for(i = 0; i < size.row; ++i)
     {
         for(j = 0; j < size.col; ++j)
-            maze[i][j] = 'X';
+            maze[i][j] = '1';
         maze[i][j] = '\n';
     }
 
     start.row = 0;
     start. col = 1;
+    maze[start.row][start.col] = '0';
     exit.row = size.row;
     exit.col = size.col - 1;
+    maze[size.row][size.col] = '0';
 
     carve(&maze, &size, start.row + 1, start.col, 2);
         
