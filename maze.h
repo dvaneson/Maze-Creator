@@ -9,6 +9,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+
+
 struct location
 {
 	int col;
@@ -16,6 +18,7 @@ struct location
 };
 
 int carve(char ***, struct location *, int, int, int);
+
 void goNorth(char ***, struct location *, int, int);
 void goEast(char ***, struct location *, int, int);
 void goSouth(char ***, struct location *, int, int);

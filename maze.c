@@ -15,11 +15,11 @@ int carve(char *** maze, struct location * size, int row, int col, int direction
 {
     int randDirection, nextDirection, i;
     (*maze)[row][col] = '0';   
-    for(i = 0; i < size->row; ++i)
+ /*   for(i = 0; i < size->row; ++i)
     {
         printf("%s", (*maze)[i]);
     }
-    printf("\n");
+    printf("\n");*/
     randDirection = rand() % 3 + 3;
     nextDirection = rand() % 2 + 1;
     direction = (direction + randDirection) % 4;
@@ -41,7 +41,8 @@ void goNorth(char *** maze, struct location * size, int row, int col)
 {
     int i, j;
     int move = 1;
-    /*If at edge of array*/
+
+    /*If next to edge of array*/
     if(row - 1 == 0)
         return;
 
@@ -62,6 +63,7 @@ void goEast(char *** maze, struct location * size, int row, int col)
     int i, j;
     int move = 1;
 
+    /*If next to edge of array*/
     if(col + 2 == size->col)
         return;
 
@@ -82,6 +84,7 @@ void goSouth(char *** maze, struct location * size, int row, int col)
     int i, j;
     int move = 1;
 
+    /*If next to edge of array*/
     if(row + 2 == size->row)
         return;
 
@@ -101,6 +104,7 @@ void goWest(char *** maze, struct location * size, int row, int col)
     int i, j;
     int move = 1;
 
+    /*If next to edge of array*/
     if(col - 1 == 0)
         return;
 

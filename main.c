@@ -42,14 +42,17 @@ int main(int argc, char * argv[])
     }
 
     start.row = 0;
-    start.col = 1;
-    /*maze[start.row][start.col] = '0';*/
-    exit.row = size.row;
-    exit.col = size.col - 1;
-    /*maze[size.row][size.col] = '0';*/
+    start.col = rand() % (size.col - 1);
+    maze[start.row][start.col] = '0';
 
     carve(&maze, &size, start.row + 1, start.col, 2);
-        
+
+    exit.row = size.row - 1;
+    exit.col = rand() % size.col;
+    while(maze[exit.row - 1][exit.col] != '0')
+        exit.col = rand() % size.col;
+
+    maze[exit.row][exit.col] = '0';
 
     filePtr = fopen("rand.txt", "w");
     
