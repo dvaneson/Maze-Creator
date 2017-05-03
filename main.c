@@ -19,8 +19,8 @@ int main(int argc, char * argv[])
     /*If executable doesn't come with parameters, do random size*/
     if(argc < 3)
     {
-        size.col = rand()%10 + 5;
-        size.row = rand()%10 + 5;
+        size.col = rand()%30 + 5;
+        size.row = rand()%30 + 5;
     }
     else
     {
@@ -42,11 +42,11 @@ int main(int argc, char * argv[])
     }
 
     start.row = 0;
-    start. col = 1;
-    maze[start.row][start.col] = '0';
+    start.col = 1;
+    /*maze[start.row][start.col] = '0';*/
     exit.row = size.row;
     exit.col = size.col - 1;
-    maze[size.row][size.col] = '0';
+    /*maze[size.row][size.col] = '0';*/
 
     carve(&maze, &size, start.row + 1, start.col, 2);
         

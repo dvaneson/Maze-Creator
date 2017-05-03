@@ -30,23 +30,28 @@ int carve(char *** maze, struct location * size, int row, int col, int direction
     direction = (direction + nextDirection) % 4;
     go[direction](maze, size, row, col);
 
-    direction = (2 * nextDirection + randDirection) % 4;
+    direction = (direction + 2 * nextDirection + randDirection) % 4;
     go[direction](maze, size, row, col);
     return 0;
 }
 
 
 
-/*If walkable either 1 block or 2 blocks away, don't go*/
-/*Or if would run into a wall, don't go*/
 void goNorth(char *** maze, struct location * size, int row, int col)
 {
-    if(row - 1 == 0 || row - 2 == 0)
+    int i, j;
+    int move = 1;
+    /*If at edge of array*/
+    if(row - 1 == 0)
         return;
 
-    else if((*maze)[row - 1][col] == '0' || (*maze)[row - 2][col] == '0')
-        return;
-    else
+    /*If it would create a circular path*/
+    for(i = 1; i <= 2; ++i)
+        for(j = -1; j <= 1; ++j)
+            if((*maze)[row - i][col + j] == '0')
+                move = 0;
+
+    if(move)
         carve(maze, size, --row, col, 0);
 }
 
@@ -54,11 +59,19 @@ void goNorth(char *** maze, struct location * size, int row, int col)
 
 void goEast(char *** maze, struct location * size, int row, int col)
 {
-    if(col + 1 == size->col || col + 2 == size->col)
+    int i, j;
+    int move = 1;
+
+    if(col + 2 == size->col)
         return;
-    else if((*maze)[row][col + 1] == '0' || (*maze)[row][col + 2] == '0')
-        return;
-    else
+
+    /*If it would create a circular path*/
+    for(i = 1; i <= 2; ++i)
+        for(j = -1; j <= 1; ++j)
+            if((*maze)[row + j][col + i] == '0')
+                move = 0;
+
+    if(move)
         carve(maze, size, row, ++col, 1);
 }
 
@@ -66,11 +79,18 @@ void goEast(char *** maze, struct location * size, int row, int col)
 
 void goSouth(char *** maze, struct location * size, int row, int col)
 {
-    if(row + 1 == size->row || row + 2 == size->row)
+    int i, j;
+    int move = 1;
+
+    if(row + 2 == size->row)
         return;
-    else if((*maze)[row + 1][col] == '0' || (*maze)[row + 2][col] == '0')
-        return;
-    else
+
+    /*If it would create a circular path*/
+    for(i = 1; i <= 2; ++i)
+        for(j = -1; j <= 1; ++j)
+            if((*maze)[row + i][col + j] == '0')
+                move = 0;
+    if(move)
         carve(maze, size, ++row, col, 2);
 }
 
@@ -78,10 +98,18 @@ void goSouth(char *** maze, struct location * size, int row, int col)
 
 void goWest(char *** maze, struct location * size, int row, int col)
 {
-    if(col - 1 == 0 || col - 2 == 0)
+    int i, j;
+    int move = 1;
+
+    if(col - 1 == 0)
         return;
-    else if((*maze)[row][col - 1] == '0' || (*maze)[row][col - 2] == '0')
-        return;
-    else
+
+    /*If it would create a circular path*/
+    for(i = 1; i <= 2; ++i)
+        for(j = -1; j <= 1; ++j)
+            if((*maze)[row + j][col - i] == '0')
+                move = 0;
+
+    if(move)
         carve(maze, size, row, --col, 3);
 }
